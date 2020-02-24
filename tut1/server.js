@@ -2,9 +2,11 @@ const express = require('express')
 const expressGraphQL = require('express-graphql')
 const {
 	GraphQLSchema, 
-	// GraphQLObjectType is Used for BOTH: declaring custom types (like "Book") 
-	// AND declaring the Root Query:
-	GraphQLObjectType,  
+	GraphQLObjectType,
+	// GraphQLObjectType is Used for many things: 
+	// -	declaring custom types (like "Book") 
+	// -	declaring the Root Query 
+	// -	declaring the Toot Mutation
 	GraphQLNonNull,
 	GraphQLInt,
 	GraphQLString,
@@ -57,7 +59,7 @@ const RootQueryType = new GraphQLObjectType({
 	description: 'This is the root query (top level)',
 	fields: () => ({ 
 	// Here every "fields" entry is actually a query, 
-	// unlike when defining Types where every 'fields' entry is actually a "field"
+	// unlike when defining Types where every 'fields' entry is actually a "field" on that type
 		
 		// Query a Book by id			 
 		book: {
