@@ -25,7 +25,7 @@ const BookType = new GraphQLObjectType({
 		id: { type: GraphQLNonNull(GraphQLInt) }, 
 		name: { type: GraphQLNonNull(GraphQLString) },
 		authorId: { type: GraphQLNonNull(GraphQLInt) },
-		// This one is a relationship to another vertice, so it does need resolve method
+		// This one is a relationship to another vertice
 		author: { 
 			type: AuthorType,
 			resolve: (parentBook, args) => {
@@ -55,7 +55,11 @@ const AuthorType = new GraphQLObjectType({
 const RootQueryType = new GraphQLObjectType({
 	name: 'TheRootQuery',
 	description: 'This is the root query (top level)',
-	fields: () => ({
+	fields: () => ({ 
+	// Here every "fields" entry is actually a query, 
+	// unlike when defining Types where every 'fields' entry is actually a "field"
+		
+		// Query a Book by id			 
 		book: {
 			type: BookType,
 			args: {
@@ -63,11 +67,21 @@ const RootQueryType = new GraphQLObjectType({
 			},
 			resolve: (parent, args) => data.books.find(book=>book.id===args.id)
 		},
+		// Query all Books
 		books: {
 			type: GraphQLList(BookType),
 			description: 'A list of books',
 			resolve: () => data.books
 		},
+		// Query an author by id
+		author: {
+			type: AuthorType,
+			args: {
+				id: {type:GraphQLInt}
+			},
+			resolve:(parent, args) => data.authors.find(author=>author.id===args.id)
+		},
+		// Query all authors
 		authors: {
 			type: GraphQLList(AuthorType),
 			description: 'A list of authors',
@@ -76,9 +90,38 @@ const RootQueryType = new GraphQLObjectType({
 	})
 })
 
+const RootMutationType = new GraphQLObjectType({
+	name: 'Mutation',
+	description: 'The root mutation',
+	fields: ()=>({
+		// Here every "field" entry is a particular mutation
+		addBook: {
+			type: BookType,
+			description: 'Add a new book',
+			args:{
+				name: {type: GraphQLNonNull(GraphQLString)},
+				authorId: {type: GraphQLNonNull(GraphQLInt)}
+			},
+			resolve: (parent, args) =>{ 
+				const book = {
+					id: ++data.books.length, 
+					name: args.name,
+					authorId: args.authorId
+				} 
+				data.books.push(book)
+				return book
+			}
+
+		}
+	})
+
+})
+
+
 // ------------ Defining the schema ----------------
 const schema = new GraphQLSchema({
-	query: RootQueryType
+	query: RootQueryType,
+	mutation: RootMutationType
 });
 
 // Plug to express
