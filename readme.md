@@ -11,3 +11,7 @@ Example with Authors and Books in an Express Server, to run:
 
 https://www.youtube.com/watch?v=ZQL7tL2S0oQ
 https://github.com/WebDevSimplified/Learn-GraphQL/blob/master/server.js
+
+### Tut 2
+
+https://reactgo.com/vue-graphql-apollo-tutorial/

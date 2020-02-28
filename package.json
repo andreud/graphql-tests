@@ -1,19 +1,24 @@
 {
-  "name": "graphql-tut",
+  "name": "graphql-tests",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Just me following some tutorials and experiments to test drive GraphQL.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreud/graphql-tests.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreud/graphql-tests/issues"
+  },
+  "homepage": "https://github.com/andreud/graphql-tests#readme",
   "dependencies": {
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^14.6.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.2"
   }
 }
